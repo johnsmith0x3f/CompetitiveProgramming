@@ -38,12 +38,9 @@ int main() {
 			if(x == y) return 0;
 
 			int ans = INF;
-			for(int i = 0; i < 16; ++i) {
-				if(~pre[x][i] && (a[pre[x][i]] & a[x]) && (a[pre[x][i]] & a[y])) ans = min(ans, abs(x - pre[x][i]) + abs(y - pre[x][i]));
-				if(~nxt[x][i] && (a[nxt[x][i]] & a[x]) && (a[nxt[x][i]] & a[y])) ans = min(ans, abs(x - nxt[x][i]) + abs(y - nxt[x][i]));
-				if(~pre[y][i] && (a[pre[y][i]] & a[x]) && (a[pre[y][i]] & a[y])) ans = min(ans, abs(x - pre[y][i]) + abs(y - pre[y][i]));
-				if(~nxt[y][i] && (a[nxt[y][i]] & a[x]) && (a[nxt[y][i]] & a[y])) ans = min(ans, abs(x - nxt[y][i]) + abs(y - nxt[y][i]));
-			}
+			for(int i = 0; i < 16; ++i)
+				for(int z : { pre[x][i], nxt[x][i], pre[y][i], nxt[y][i] })
+					if(~z && (a[z] & a[x]) && (a[z] & a[y])) ans = min(ans, abs(x - z) + abs(y - z));
 			return ans < INF ? ans : -1;
 		};
 
