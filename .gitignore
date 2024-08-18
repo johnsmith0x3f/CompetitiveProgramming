@@ -1,2 +1,4 @@
-# Ignore exe files.
+# Ignore exe/out files.
 *.exe
+*.out
+
