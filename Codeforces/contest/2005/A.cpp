@@ -11,15 +11,15 @@ constexpr T read() {
 	return f ? x : -x;
 }
 
-const char vow[5] = { 'a', 'e', 'i', 'o', 'u' };
+const string vow = "aeiou";
 
 int main() {
 	int cas = read();
 	while(cas--) {
-		int n = read(), m = n / 5;
+		int n = read();
 		for(int i = 0; i < 5; ++i)
-			for(int j = 0; j < m + (i < n % 5); ++j) putchar(vow[i]);
-		putchar(10);
+			for(int j = 0; j < n / 5 + (i < n % 5); ++j) putchar(vow[i]);
+		putchar('\n');
 	}
 	return 0;
 }
