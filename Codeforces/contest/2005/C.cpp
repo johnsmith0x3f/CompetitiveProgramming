@@ -11,41 +11,34 @@ constexpr T read() {
 	return f ? x : -x;
 }
 
-const int N = 1003;
-const string sc = "narek";
-int f[N][5];
-
-inline bool check(const char &c) {
-	bool res = 0;
-	for(int i = 0; i < 5; ++i) res |= (c == sc[i]);
-	return res;
-}
+const string sel = "narek";
+int f[2][5];
 
 int main() {
 	int cas = read();
 	while(cas--) {
 		int n = read(), m = read();
 
-		for(int i = 0; i <= n; ++i)
-			for(int j = 0; j < 5; ++j) f[i][j] = -1e9;
 		f[0][0] = 0;
+		for(int i = 1; i < 5; ++i) f[0][i] = -1e9;
 
 		for(int i = 1; i <= n; ++i) {
-			string s;
-			cin >> s;
-			memcpy(f[i], f[i-1], sizeof(f[i]));
+			string str;
+			cin >> str;
+			int now = i & 1, las = now ^ 1;
+			memcpy(f[now], f[las], sizeof(f[now]));
 			for(int j = 0; j < 5; ++j) {
 				int p = j, foo = 0, bar = 0;
 				for(int k = 0; k < m; ++k) {
-					if(s[k] == sc[p] && ++p >= 5) p = 0, foo += 5;
-					else if(s[k] != sc[p] && check(s[k])) ++bar;
+					if(str[k] == sel[p]) foo += (++p >= 5) * 5, p %= 5;
+					else if(sel.find(str[k]) < sel.length()) ++bar;
 				}
-				f[i][p] = max(f[i][p], f[i-1][j] + foo - bar);
+				f[now][p] = max(f[now][p], f[las][j] + foo - bar);
 			}
 		}
 
 		int ans = 0;
-		for(int i = 0; i < 5; ++i) ans = max(ans, f[n][i] - i);
+		for(int i = 0; i < 5; ++i) ans = max(ans, f[n&1][i] - i);
 		printf("%d\n", ans);
 	}
 	return 0;
