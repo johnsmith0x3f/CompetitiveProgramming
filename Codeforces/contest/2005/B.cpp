@@ -11,23 +11,18 @@ constexpr T read() {
 	return f ? x : -x;
 }
 
-const int N = 100005;
-int b[N];
-
 inline void solve() {
 	int n = read(), m = read(), q = read();
-	for(int i = 1; i <= m; ++i) b[i] = read();
-	sort(b+1, b+m+1);
+	vector<int> b(m);
+	for(int i = 0; i < m; ++i) b[i] = read();
 
+	sort(b.begin(), b.end());
 	while(q--) {
-		int a = read();
-		int l = lower_bound(b+1, b+m+1, a) - b - 1;
-		int r = upper_bound(b+1, b+m+1, a) - b;
+		int k = upper_bound(b.begin(), b.end(), read()) - b.begin();
 
-		if(a == b[r-1]) printf("0\n");
-		else if(l == 0) printf("%d\n", b[r] - 1);
-		else if(r == m+1) printf("%d\n", n - b[l]);
-		else printf("%d\n", (b[r] - b[l]) / 2);
+		if(k == 0) printf("%d\n", b[0] - 1);
+		else if(k == m) printf("%d\n", n - b[m-1]);
+		else printf("%d\n", (b[k] - b[k-1]) / 2);
 	}
 }
 
