@@ -6,8 +6,8 @@ using i64 = long long;
 template <typename T = int>
 constexpr T read() {
 	T x = 0; bool f = 1; char c = getchar();
-	while(isdigit(c)^1) f &= (c != 45), c = getchar();
-	while(isdigit(c)) x = (x<<1) + (x<<3) + (c^48), c = getchar();
+	while(isdigit(c) ^ 1) f &= (c != 45), c = getchar();
+	while(isdigit(c)) x = (x << 1) + (x << 3) + (c ^ 48), c = getchar();
 	return f ? x : -x;
 }
 
@@ -26,15 +26,15 @@ inline int query(int k) {
 
 inline void solve() {
 	n = read();
-	for(int i = 1; i <= n; ++i) a[i] = read();
+	for(int i = 1; i <= n; i++) a[i] = read();
 
-	for(int i = 1; i <= n; ++i) l[i] = n, r[i] = 0;
-	for(int i = 1; i <= n; ++i) l[a[i]] = min(l[a[i]], i), r[a[i]] = max(r[a[i]], i);
+	for(int i = 1; i <= n; i++) l[i] = n, r[i] = 0;
+	for(int i = 1; i <= n; i++) l[a[i]] = min(l[a[i]], i), r[a[i]] = max(r[a[i]], i);
 
-	for(int i = 1; i <= n; ++i) c[i] = 0;
+	for(int i = 1; i <= n; i++) c[i] = 0;
 
 	int m = 0, L = n, R = 0;
-	for(int i = 1; i <= n; ++i) {
+	for(int i = 1; i <= n; i++) {
 		if(l[i] > r[i]) continue;
 
 		m++, L = min(L, l[i]), R = max(R, r[i]);
@@ -43,7 +43,7 @@ inline void solve() {
 	}
 
 	int ans = 0;
-	for(int i = 1; i <= n; ++i) ans += (query(i) >= m);
+	for(int i = 1; i <= n; i++) ans += (query(i) >= m);
 	printf("%d\n", ans);
 }
 
