@@ -13,11 +13,12 @@ int main() {
 
 		vector<int> a(n);
 		for(int i = 0; i < n; ++i) cin >> a[i];
+		sort(a.begin(), a.end());
 
 		int ans = 0;
-		sort(a.begin(), a.end());
-		for(int i = 0, j = 0; i < n; j = max(j, ++i)) {
-			while(j + 1 < n && a[j + 1] < min(a[i] + k, a[j] + 2)) ++j;
+		for(int i = 0, j = 0; i < n; ++i) {
+			j = max(j, i);
+			while(j + 1 < n && a[j + 1] < a[i] + k && a[j + 1] <= a[j] + 1) ++j;
 			ans = max(ans, j - i + 1);
 		}
 		cout << ans << "\n";

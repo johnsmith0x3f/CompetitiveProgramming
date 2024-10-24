@@ -19,7 +19,7 @@ int main() {
 	for(int i = 0; i < t; ++i) cin >> n[i];
 	for(int i = 0; i < t; ++i) cin >> k[i];
 
-	for(int i = 0; i < t; ++i) cout << ((k[i] == 0 || k[i] == n[i]) ? 1 : p[k[i]]) << "\n";
+	for(int i = 0; i < t; ++i) cout << (k[i] == n[i] ? 1 : p[k[i]]) << "\n";
 
 	return 0;
 }

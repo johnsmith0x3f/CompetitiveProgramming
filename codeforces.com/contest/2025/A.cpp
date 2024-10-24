@@ -12,7 +12,7 @@ int main() {
 		cin >> s >> t;
 
 		int i = 0;
-		while(i < int(min(s.size(), t.size())) && s[i] == t[i]) ++i;
+		while(i < min(s.size(), t.size()) && s[i] == t[i]) ++i;
 		cout << int(s.size() + t.size()) - max(i - 1, 0) << "\n";
 	}
 
