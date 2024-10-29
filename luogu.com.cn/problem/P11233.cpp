@@ -3,6 +3,9 @@ using namespace std;
 
 using i64 = long long;
 
+const int N = 2e5 + 5;
+const int V = 1e6 + 5;
+
 inline void solve() {
 	int n;
 	cin >> n;
@@ -13,25 +16,14 @@ inline void solve() {
 	vector<i64> s(n + 1, 0);
 	for(int i = 1; i <= n; ++i) s[i] = s[i - 1] + (a[i] == a[i - 1]) * a[i];
 
-	int mx = 0;
-	for(int i = 1; i <= n; ++i) mx = max(mx, a[i]);
-
-	vector<int> h(mx + 1, 0), las(n + 1, 0);
-	for(int i = 1; i <= n; ++i) las[i] = h[a[i]], h[a[i]] = i;
-
-	vector<vector<i64>> f(n + 1, vector<i64>(2, 0));
+	vector<i64> f(N, 0), p(V, 0);
 	for(int i = 1; i <= n; ++i) {
-		if(a[i] == a[i - 1]) {
-			f[i][0] = max(f[i - 1][0], f[i - 1][1]) + a[i];
-			f[i][1] = max(f[i - 1][0], f[i - 1][1]) + s[i] - s[las[i]];
-		}
-		else {
-			f[i][0] = max(f[i - 1][0], f[i - 1][1]);
-			f[i][1] = max(f[i][0], f[las[i] + 1][1] + s[i] - s[las[i] + 1] + a[las[i]]);
-		}
+		f[i] = f[i - 1];
+		if(p[a[i]]) f[i] = max(f[i], f[p[a[i]] + 1] + s[i] - s[p[a[i]] + 1] + a[i]);
+		p[a[i]] = i;
 	}
 
-	cout << max(f[n][0], f[n][1]) << "\n";
+	cout << f[n] << "\n";
 }
 
 int main() {
