@@ -13,7 +13,7 @@ struct SegTree {
 		for(int i = 0; i <= c; ++i) coe[v][i] = 0;
 		for(int i = 0; i <= c; ++i)
 			for(int j = 0; j <= c; ++j)
-				(coe[v][min(i + j, c)] += 1ll * coe[v << 1 | 0][i] * coe[v << 1 | 1][j] % P) %= P;
+				(coe[v][min(i + j, c)] += 1l * coe[v << 1 | 0][i] * coe[v << 1 | 1][j] % P) %= P;
 	}
 
 	void build(int v, int l, int r) {
