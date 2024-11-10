@@ -9,7 +9,7 @@ inline void sieve() {
 	for(int i = 2; i < N; ++i) isprime[i] = 1;
 
 	for(int i = 2; i < N; ++i) {
-		if(isprime[i]) pr[++tot] = d[i] = i;
+		if(isprime[i]) pr[++tot] = i, d[i] = i;
 		for(int j = 1; j <= tot && i * pr[j] < N; ++j) {
 			isprime[i * pr[j]] = 0, d[i * pr[j]] = pr[j];
 			if(i % pr[j] == 0) break;
