@@ -3,27 +3,34 @@ using namespace std;
 
 using i64 = long long;
 
-int main() {
-	int tt;
-	cin >> tt;
-	while(tt--) {
-		int n;
-		cin >> n;
+inline void solve() {
+	int n;
+	cin >> n;
 
-		vector<int> a(n + 1);
-		for(int i = 1; i <= n; ++i) cin >> a[i];
+	vector<int> a(n + 1);
+	for(int i = 1; i <= n; ++i) cin >> a[i];
 
-		i64 sum = 0;
-		vector<int> f(n + 1, 0);
-		map<i64, int> las; las[0] = 0;
-		for(int i = 1; i <= n; ++i) {
-			sum += a[i], f[i] = f[i - 1];
-			if(las.find(sum) != las.end()) f[i] = max(f[i], f[las[sum]] + 1);
-			las[sum] = i;
-		}
+	vector<i64> s(n + 1);
+	for(int i = 1; i <= n; ++i) s[i] = s[i - 1] + a[i];
 
-		cout << f[n] << "\n";
+	map<i64, int> last;
+	vector<int> dp(n + 1);
+	for(int i = 0; i <= n; ++i) {
+		dp[i] = dp[i - (i > 0)];
+		if(last.count(s[i])) dp[i] = max(dp[i], dp[last[s[i]]] + 1);
+		last[s[i]] = i;
 	}
+
+	cout << dp[n] << '\n';
+}
+
+int main() {
+	ios::sync_with_stdio(0);
+	cin.tie(0), cout.tie(0);
+
+	int t;
+	cin >> t;
+	while(t--) solve();
 
 	return 0;
 }
