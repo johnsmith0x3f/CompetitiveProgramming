@@ -8,16 +8,10 @@ inline void solve() {
 	vector<int> a(n);
 	for(int i = 0; i < n; ++i) cin >> a[i];
 
-	set<int> ss;
-	for(int i = 0; i < n; ++i) {
-		if(ss.size() && *ss.rbegin() > a[i] + 1) {
-			cout << "NO\n";
-			return;
-		}
-		ss.insert(a[i]);
-	}
+	for(int i = 1; i < n; ++i)
+		if(a[i - 1] == a[i] + 1) swap(a[i - 1], a[i]);
 
-	cout << "YES\n";
+	cout << (is_sorted(a.begin(), a.end()) ? "YES" : "NO") << '\n';
 }
 
 int main() {
