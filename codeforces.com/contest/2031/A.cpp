@@ -9,10 +9,8 @@ inline void solve() {
 	for(int i = 0; i < n; ++i) cin >> a[i];
 
 	int mx = 0;
-	for(int i = 0, j = 0; i < n; i = ++j) {
-		while(j + 1 < n && a[j] <= a[j + 1]) ++j;
-		mx = max(mx, j - i + 1);
-	}
+	map<int, int> num;
+	for(int i = 0; i < n; ++i) mx = max(mx, ++num[a[i]]);
 
 	cout << n - mx << '\n';
 }
