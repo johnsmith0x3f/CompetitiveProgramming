@@ -11,16 +11,15 @@ inline void solve() {
 	while(n <= x) n <<= 1;
 
 	vector<i64> a(n, 1e18);
-	for(int i = x; i >= 1; --i) a[i * n % x] = i * n;
+	for(int i = x; i >= 1; --i) a[(x - i * n % x) % x] = i * n;
 
 	i64 ans = m / a[0];
-	for(int y = 1; y < n && y <= m; ++y) {
-		if((x ^ y) % x == 0 || (x ^ y) % y == 0) ++ans;
+	for(i64 y = 1; y < n && y <= m; ++y) {
+		i64 z = x ^ y;
+		if(z % x == 0 || z % y == 0) ++ans;
 
-		i64 z = y + a[(x - (x ^ y) % x) % x];
-		if(z <= m) {
-			ans += 1 + (m - z) / a[0];
-		}
+		i64 t = y + a[z % x];
+		if(t <= m) ans += (m - t) / a[0] + 1;
 	}
 
 	cout << ans << '\n';
