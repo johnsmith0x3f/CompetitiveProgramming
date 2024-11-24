@@ -8,8 +8,9 @@ inline void solve() {
 	cin >> x >> m;
 	
 	int ans = 0;
-	for(i64 y = 1; y <= min(m, x + x); ++y) {
-		if((x ^ y) && (x % (x ^ y) == 0 || y % (x ^ y) == 0)) ++ans;
+	for(i64 y = 1; y <= min(x + x, m); ++y) {
+		i64 z = x ^ y;
+		if(z && (x % z == 0 || y % z == 0)) ++ans;
 	}
 	
 	cout << ans << '\n';
