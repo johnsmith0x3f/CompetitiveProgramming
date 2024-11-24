@@ -5,18 +5,20 @@ inline void solve() {
 	string s;
 	cin >> s;
 
-	for(int i = 1; i < s.size(); ++i) {
-		if(s[i - 1] == s[i]) {
-			cout << s[i - 1] << s[i] << '\n';
+	for(int i = 0; i + 1 < s.size(); ++i) {
+		if(s[i] == s[i + 1]) {
+			cout << s.substr(i, 2) << '\n';
 			return;
 		}
-		if(i > 1 && s[i - 2] != s[i]) {
-			cout << s[i - 2] << s[i - 1] << s[i] << '\n';
+	}
+	for(int i = 0; i + 2 < s.size(); ++i) {
+		if(s[i] != s[i + 2]) {
+			cout << s.substr(i, 3) << '\n';
 			return;
 		}
 	}
 
-	cout << "-1\n";
+	cout << "-1" << '\n';
 }
 
 int main() {
