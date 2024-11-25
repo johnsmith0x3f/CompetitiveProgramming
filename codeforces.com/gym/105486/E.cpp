@@ -29,10 +29,14 @@ void DFS1(int v, int p) {
 }
 
 void DFS2(int v, int p) {
-	dp[v][1] = (dp[p][1] + 1) * (dp[p][0] * binExp(dp[v][0] + 1) % P) % P;
-
 	pre[v][0] = (pre[p][0] + dp[v][0] * (dp[v][1] + 1) % P) % P;
 	pre[v][1] = (pre[p][1] + dp[v][0] * (dp[v][1] + 0) % P) % P;
+	
+	int m = e[v].size();
+	vector<i64> foo(m, 1), bar(m, 1);
+	for(int i = 0; i < m - 1; ++i) foo[i + 1] = foo[i] * (dp[e[v][i]][0] + 1) % P;
+	for(int i = m - 1; i > 0; --i) bar[i - 1] = bar[i] * (dp[e[v][i]][0] + 1) % P;
+	for(int i = 0; i < m; ++i) dp[e[v][i]][1] = (dp[v][1] + 1) * (foo[i] * bar[i] % P) % P;
 
 	for(int u : e[v]) DFS2(u, v);
 }
