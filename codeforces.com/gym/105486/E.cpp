@@ -24,10 +24,8 @@ void DFS1(int v, int p) {
     dep[v] = dep[p] + 1, fa[v][0] = p;
     for(int i = 0; i < 20; ++i) fa[v][i + 1] = fa[fa[v][i]][i];
 
-    for(int u : e[v]) DFS1(u, v);
-
     dp[v][0] = 1;
-    for(int u : e[v]) dp[v][0] = dp[v][0] * (dp[u][0] + 1) % P;
+    for(int u : e[v]) DFS1(u, v), dp[v][0] = dp[v][0] * (dp[u][0] + 1) % P;
 }
 
 void DFS2(int v, int p) {
@@ -68,10 +66,10 @@ inline void solve() {
 
         int x = LCA(u, v);
 
-        i64 temp = 0;
-        temp = (temp + (pre[u][0] + pre[v][0] - pre[x][0] - pre[x][0] + dp[x][0] * (dp[x][1] + 1) % P) % P + P) % P;
-        temp = (temp - (pre[u][1] + pre[v][1] - pre[x][1] - pre[x][1]) % P + P) % P;
-        cout << temp << '\n';
+        i64 temp = dp[x][0] * (dp[x][1] + 1) % P;
+        temp += pre[u][0] + pre[v][0] - pre[x][0] - pre[x][0];
+        temp -= pre[u][1] + pre[v][1] - pre[x][1] - pre[x][1];
+        cout << (temp % P + P) % P << '\n';
     }
 
     for(int i = 1; i <= n; ++i) {
