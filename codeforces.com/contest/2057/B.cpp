@@ -5,29 +5,24 @@ inline void solve() {
 	int n, k;
 	cin >> n >> k;
 
-	vector<int> a(n);
-	for(int i = 0; i < n; ++i) cin >> a[i];
-	sort(begin(a), end(a));
+	map<int, int> num;
+	for(int i = 0; i < n; ++i) {
+		int x;
+		cin >> x;
+		++num[x];
+	}
 
-	vector<int> nums;
-	for(int i = 0, j = 1; i < n; i = j++) {
-		while(j < n && a[j] == a[i]) ++j;
-		nums.emplace_back(j - i);
-	}
-	sort(begin(nums), end(nums));
+	vector<int> c;
+	for(auto [ _, x ] : num) c.emplace_back(x);
+	sort(begin(c), end(c));
 
-	if(k < nums[0]) {
-		cout << nums.size() << '\n';
-		return;
+	int ans = c.size();
+	for(int i = 0; i + 1 < c.size(); ++i) {
+		if(k < c[i]) break;
+		k -= c[i], --ans;
 	}
-	for(int i = 0; i < nums.size(); ++i) {
-		if(k < nums[i]) {
-			cout << nums.size() - i << '\n';
-			return;
-		}
-		k -= nums[i];
-	}
-	cout << 1 << '\n';
+	
+	cout << ans << '\n';
 }
 
 int main() {
