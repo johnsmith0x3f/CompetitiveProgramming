@@ -10,19 +10,17 @@ inline void solve() {
 	vector<int> a(n + 1);
 	for(int i = 1; i <= n; ++i) cin >> a[i];
 
-	i64 lans = 0, rans = 0;
+	auto calc = [&](const int &x, const int &y) -> i64 {
+		vector<int> vv;
+		for(int i = x; i <= y; ++i) vv.emplace_back(a[i]);
+		sort(begin(vv), end(vv));
 
-	vector<int> la;
-	for(int i = 1; i <= r; ++i) la.emplace_back(a[i]);
-	sort(begin(la), end(la));
-	for(int i = 0; i < r - l + 1; ++i) lans += la[i];
+		i64 ret = 0;
+		for(int i = 0; i < r - l + 1; ++i) ret += vv[i];
+		return ret;
+	};
 
-	vector<int> ra;
-	for(int i = l; i <= n; ++i) ra.emplace_back(a[i]);
-	sort(begin(ra), end(ra));
-	for(int i = 0; i < r - l + 1; ++i) rans += ra[i];
-
-	cout << min(lans, rans) << '\n';
+	cout << min(calc(1, r), calc(l, n)) << '\n';
 }
 
 int main() {
