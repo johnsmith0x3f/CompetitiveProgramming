@@ -5,7 +5,8 @@ inline void solve() {
 	int l, r;
 	cin >> l >> r;
 
-	cout << r - l + (l == 1 && r == 1) << '\n';
+	if(l == 1 && r == 1) cout << 1 << '\n';
+	else cout << r - l << '\n';
 }
 
 int main() {
