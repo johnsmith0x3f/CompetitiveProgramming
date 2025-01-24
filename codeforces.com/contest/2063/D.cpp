@@ -17,24 +17,27 @@ inline void solve() {
 	sort(begin(b) + 1, end(b));
 	for(int i = 1; i <= m / 2; ++i) b[i] = b[i - 1] + b[m - i + 1] - b[i];
 
-	int k = 0;
-	vector<i64> f(n + m + 1);
+	vector<i64> ans;
+	for(int k = 1; k <= n + m; ++k) {
+		int l = max(0, 2 * k - m);
+		int r = min(k, n - k);
 
-	for(int i = 1; i <= n + m; ++i) {
-		int l = max(0, i * 2 - m), r = min(i, n - i);
+		if(l > r) break;
+
 		while(r - l > 5) {
 			int lm = l + (r - l) / 3, rm = r - (r - l) / 3;
-			if(a[lm] + b[i - lm] < a[rm] + b[i - rm]) l = lm;
+			if(a[lm] + b[k - lm] < a[rm] + b[k - rm]) l = lm;
 			else r = rm;
 		}
 
-		for(int j = l; j <= r; ++j) f[i] = max(f[i], a[j] + b[i - j]);
-
-		if(f[i] > 0) k = i;
+		i64 temp = 0;
+		for(int i = l; i <= r; ++i) temp = max(temp, a[i] + b[k - i]);
+		ans.emplace_back(temp);
 	}
 
-	cout << k << '\n';
-	for(int i = 1; i <= k; ++i) cout << f[i] << " \n"[i == k];
+	cout << ans.size() << '\n';
+	for(i64 x : ans) cout << x << ' ';
+	cout << '\n';
 }
 
 int main() {
