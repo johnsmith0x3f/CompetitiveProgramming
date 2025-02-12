@@ -11,24 +11,19 @@ inline void solve() {
 	vector<int> a(n);
 	for(int i = 0; i < n; ++i) cin >> a[i];
 
-	map<int, int> num;
+	vector<int> num(n + 1);
 	for(int i = 0; i < n; ++i) ++num[a[i]];
 
-	for(auto [ x, y ] : num) {
-		if(y == 1) {
-			cout << "NO" << '\n';
-			return;
+	bool flag = true;
+	for(int i = 1; i <= n; ++i) {
+		if(num[i] == 1) {
+			flag = false;
+			break;
 		}
-
-		if(x == num.rbegin()->first) {
-			if(y & 1) cout << "NO" << '\n';
-			else cout << "YES" << '\n';
-
-			return;
-		}
-
-		if(y > 2) num[x + 1] += y - 2;
+		num[i + 1] += max(num[i] - 2, 0);
 	}
+
+	cout << (flag ? "YES" : "NO") << '\n';
 }
 
 int main() {
