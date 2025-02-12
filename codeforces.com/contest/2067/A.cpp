@@ -5,8 +5,7 @@ inline void solve() {
 	int x, y;
 	cin >> x >> y;
 
-	if(x + 1 == y) cout << "YES" << '\n';
-	else if(x > y && (x - y) % 9 == 8) cout << "YES" << '\n';
+	if(x + 1 >= y && (x + 1 - y) % 9 == 0) cout << "YES" << '\n';
 	else cout << "NO" << '\n';
 }
 
