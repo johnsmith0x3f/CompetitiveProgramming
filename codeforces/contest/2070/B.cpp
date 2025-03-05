@@ -10,17 +10,16 @@ inline void solve() {
 
 	string s;
 	cin >> s;
+	s = '~' + s;
 
-	i64 sum = 0, foo = 0, bar = 0;
-	for(int i = 0; i < n; ++i) {
-		sum += (s[i] == 'R') - (s[i] == 'L');
-		if(!foo && sum == -x) foo = i + 1;
-		if(!bar && sum == +0) bar = i + 1;
+	i64 X = 0, Y = 0, sum = 0;
+	for(int i = 1; i <= n; ++i) {
+		sum += (s[i] == 'L') - (s[i] == 'R');
+		if(!X && sum == x) X = i;
+		if(!Y && sum == 0) Y = i;
 	}
 
-	if(foo == 0 || k < foo) cout << 0 << '\n';
-	else if(bar == 0) cout << 1 << '\n';
-	else cout << 1 + (k - foo) / bar << '\n';
+	cout << !!X * (1 + (!!Y ? (k - X) / Y : 0)) << '\n';
 }
 
 int main() {
