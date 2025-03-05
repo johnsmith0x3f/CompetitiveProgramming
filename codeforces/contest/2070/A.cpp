@@ -6,9 +6,7 @@ inline void solve() {
 	cin >> n;
 
 	int ans = 0;
-	for(int i = 0; i < 15; ++i) {
-		if(i % 3 == i % 5) ans += n / 15 * i + (n % 15 >= i);
-	}
+	for(int i = 0; i < 3; ++i) ans += (n - i + 15) / 15;
 	cout << ans << '\n';
 }
 
