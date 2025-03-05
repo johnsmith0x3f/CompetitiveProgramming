@@ -6,44 +6,33 @@ using i64 = long long;
 
 const int N = 3e5 + 5;
 const int P = 998244353;
-i64 dep[N], sum[N], ans[N];
-vector<int> G[N];
 
 inline void solve() {
 	int n;
 	cin >> n;
 
+	vector<int> p(n + 1);
+	for(int i = 2; i <= n; ++i) cin >> p[i];
+
+	vector<int> d(n + 1);
+	for(int i = 1; i <= n; ++i) d[i] = d[p[i]] + 1;
+
+	vector<vector<int>> vs(n + 1);
+	for(int i = 1; i <= n; ++i) vs[d[i]].emplace_back(i);
+
+	vector<i64> dp(n + 1), sum(n + 1);
+	dp[1] = sum[1] = 1;
+
 	for(int i = 2; i <= n; ++i) {
-		int p;
-		cin >> p;
-		G[p].push_back(i);
-	}
-
-	stack<int> st;
-	auto BFS = [&]() {
-		queue<int> q;
-		q.push(1);
-
-		while(q.size()) {
-			int v = q.front();
-			st.push(v), q.pop();
-			for(int u : G[v]) dep[u] = dep[v] + 1, q.push(u);
+		for(int v : vs[i]) {
+			dp[v] = (sum[d[v] - 1] - (p[v] == 1 ? 0 : dp[p[v]]) + P) % P;
+			sum[d[v]] = (sum[d[v]] + dp[v]) % P;
 		}
-	};
-
-	BFS();
-
-	while(st.size()) {
-		int v = st.top(); st.pop();
-
-		ans[v] = sum[dep[v] + 1] + 1;
-		for(int u : G[v]) ans[v] = (ans[v] - ans[u] + P) % P;
-		sum[dep[v]] = (sum[dep[v]] + ans[v]) % P;
 	}
 
-	cout << (sum[1] + 1) % P << '\n';
-
-	for(int i = 0; i <= n; ++i) sum[i] = 0, G[i].clear();
+	i64 ans = 0;
+	for(int i = 1; i <= n; ++i) ans = (ans + dp[i]) % P;
+	cout << ans << '\n';
 }
 
 int main() {
